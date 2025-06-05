@@ -1,103 +1,101 @@
-# DistAE: Signal Distance Measurement in Latent Space via Autoencoders
+# DistAE: Distance-preserving Autoencoder for Signal Analysis
 
-> **A mathematically rigorous deep-learning approach for defining robust distance metrics between complex signals using convolutional autoencoder latent spaces.**
+> **An innovative approach using convolutional autoencoders to define robust and meaningful distances between temporal signals in a structured latent space.**
 
-## Project Overview
+## Overview
 
-This project develops an innovative convolutional autoencoder (CAE) designed to structure a latent space preserving precise notions of distance between temporal signals. The proposed method addresses the mathematical limitations and robustness issues inherent in traditional metrics like Euclidean distance and Dynamic Time Warping (DTW).
+Measuring distances between signals accurately is critical in many fields such as biomedical engineering, signal processing, and financial analysis. Traditional methods like Euclidean distance or Dynamic Time Warping (DTW) often fail to handle noise, phase shifts, or computational complexity adequately.
 
-Key advantages:
+This project addresses these issues by developing a convolutional autoencoder (CAE) that learns a latent representation of signals specifically structured to preserve meaningful distances defined in the original parameter space.
 
-- Robustness to noise, phase shifts, frequency and amplitude variations.
-- Preservation of underlying geometric structures in signal spaces.
-- Enhanced clustering, anomaly detection, and interpolation capabilities.
 
-## Mathematical Motivation
+## Motivation and Theoretical Background
 
-Classical distance measures (`L2 norm`, `Fourier-based metrics`, `DTW`) often lack mathematical robustness or computational efficiency. By defining distances directly within a latent representation learned through CAEs, we achieve mathematical properties such as:
+Conventional distance metrics have significant limitations:
 
-- **Continuity** and **smoothness** of distances with respect to input signal variations.
-- **Invariant embeddings** respecting geometric transformations of signals.
-- Preservation of intrinsic topology and distances between signals.
+- **Euclidean distance** is intuitive but sensitive to noise and phase shifts.
+- **Fourier-based methods** are computationally efficient but fail under time shifts.
+- **DTW** handles distortions but is computationally costly (O(n²)).
 
-## Theorical Formulation
+By training an autoencoder to preserve a defined metric in its latent representation, we obtain a robust alternative that overcomes these limitations, capable of efficient clustering, classification, and anomaly detection.
 
-### Latent Space Definition via CAE
+## Methodology
 
-The autoencoder model is mathematically defined by two mappings:
+### Latent Representation via Convolutional Autoencoder
 
-- **Encoder** \( f_{\text{enc}}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{d} \)
-- **Decoder** \( f_{\text{dec}}: \mathbb{R}^{d} \rightarrow \mathbb{R}^{n} \)
+The convolutional autoencoder comprises:
 
-such that for an input signal \( s(t) \in \mathbb{R}^{n} \):
+- **Encoder**: Compresses signals into a lower-dimensional latent representation.
+- **Decoder**: Reconstructs signals from latent vectors.
 
-\[
-f_{\text{dec}}\bigl(f_{\text{enc}}(s(t))\bigr) \approx s(t)
-\]
+The latent vector \( z \in \mathbb{R}^d \) encodes intrinsic properties of signals.
 
-### Latent Space Distance Metrics
+![Autoencoder Architecture](images/autoencoder_architecture.png)
 
-The mathematical construction of distances in latent space involves two metrics:
+### Distance Definition in Latent Space
 
-- **Euclidean Metric** (\( L^2 \)-norm):
+Two primary distance metrics are considered in the latent space:
 
+- **Euclidean distance**:
 \[
 d(z_i, z_j) = \sqrt{\sum_{k=1}^{d}(z_{i,k} - z_{j,k})^2}
 \]
 
-- **Cosine Metric** (Inner-product derived metric):
-
+- **Cosine distance**:
 \[
 d(z_i, z_j) = 1 - \frac{\langle z_i, z_j \rangle}{\|z_i\|\cdot\|z_j\|}
 \]
 
----
+### Training Objective (Loss Function)
 
-## Loss Function (Mathematical)
-
-The CAE's training loss mathematically combines two crucial components: a **reconstruction loss** and a **distance-preserving loss**, defined explicitly as:
+The model’s loss combines signal reconstruction accuracy and the preservation of distances defined by original signal parameters:
 
 \[
-\mathcal{L} = \alpha \underbrace{\frac{1}{N}\sum_{i=1}^{N}\|s_i(t)-\hat{s}_i(t)\|_2^2}_{\text{Reconstruction Loss}} 
-+ \beta \underbrace{\frac{1}{N^2}\sum_{i=1}^{N}\sum_{j=1}^{N}\bigl(\|\theta_i - \theta_j\|_2^2 - \|z_i - z_j\|_2^2\bigr)^2}_{\text{Distance-Preserving Loss}}
+\mathcal{L} = \alpha\frac{1}{N}\sum_{i=1}^{N}\|s_i - \hat{s}_i\|^2_2 + \beta\frac{1}{N^2}\sum_{i,j=1}^{N}\left(\|\theta_i - \theta_j\|^2_2 - \|z_i - z_j\|^2_2\right)^2
 \]
 
-Here:
+- \( s_i, \hat{s}_i \): original and reconstructed signals
+- \( z_i \): latent representation
+- \( \theta_i \): original signal parameters
+- \( \alpha, \beta \): weighting hyperparameters
 
-- \( s_i(t) \) : original signals
-- \( \hat{s}_i(t) = f_{\text{dec}}(z_i) \) : reconstructed signals
-- \( z_i = f_{\text{enc}}(s_i(t)) \) : latent vectors
-- \( \theta_i \) : original parameter vectors of signals
+---
 
 ## Experiments and Results
 
-### Synthetic Signals
+### Synthetic Signal Analysis
 
-Synthetic signals, defined mathematically by polynomial and cosine combinations, provided controlled tests for latent space geometry validation:
+Initially, the model was trained on synthetic signals composed of polynomial and cosine terms:
 
 \[
-s(t) = \sum_{i=0}^{N_p} a_i t^i + \sum_{i=1}^{N_c} b_i \cos(w_i t + \varphi_i)
+s(t) = \sum_{i=0}^{3} a_i t^i + \sum_{i=1}^{8} b_i \cos(w_i t + \varphi_i)
 \]
 
-The model demonstrated mathematically consistent trajectories in latent space when varying parameters independently.
+This controlled setting demonstrated the CAE’s capacity to preserve complex parametric relationships in latent space.
 
-### Real ECG Data Analysis
+### Real ECG Data Application
 
-Validation on ECG signals confirmed practical mathematical robustness and performance consistency:
+The method was further validated using real ECG signals. The CAE successfully encoded the complex temporal dynamics and robustly reconstructed the signals, making it suitable for medical anomaly detection.
 
-- Precise mathematical correspondence between latent distances and clinical ECG variations.
-- Highly accurate reconstruction, validating latent space geometry.
-
----
-
-## Latent Space Properties (Mathematical Insights)
-
-Latent space analysis via PCA shows:
-
-- Structured manifold preserving intrinsic signal geometry.
-- Explicit preservation of linear and nonlinear parameter variations.
+![ECG Signal Reconstruction](images/ecg_reconstruction.png)
 
 ---
 
-## 🛠️ Repository Structure
+## Latent Space Insights
+
+Analysis using PCA on latent representations showed clearly structured parameter trajectories, confirming that the latent space preserves the intrinsic geometry of signals.
+
+![Latent Parameter Trajectory](images/latent_parameter_trajectory.png)
+
+Key findings:
+
+- Clear separation of distinct signal classes.
+- Robustness of distance preservation even under noisy conditions.
+- Effective encoding of nonlinear signal characteristics.
+
+---
+
+## Repository Structure
+
+
 
