@@ -79,7 +79,7 @@ To evaluate the generalization of our approach beyond synthetic signals, we appl
 The model was trained on 4-second ECG segments and learned a latent representation that simultaneously preserved inter-signal distances and enabled accurate reconstruction.
 
 <p align="center">
-  <img src="images/ecg_reconstruction.png" alt="ECG signal reconstruction">
+  <img src="images/recon.png" alt="ECG signal reconstruction">
 </p>
 
 **Reconstruction performance:**  
@@ -89,7 +89,7 @@ The CAE achieves high-fidelity reconstructions, with Mean Squared Errors below 0
 To evaluate whether the latent space meaningfully captures proximity, we computed distances between several pairs of signals and visualized the closest, farthest, and a random pair:
 
 <p align="center">
-  <img src="images/ecg_distance_measurement.png" alt="ECG signal distance comparison">
+  <img src="images/distance-ECG.png" alt="ECG signal distance comparison">
 </p>
 
 The plots illustrate that:
