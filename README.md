@@ -30,7 +30,9 @@ The convolutional autoencoder comprises:
 
 The latent vector $z \in \mathbb{R}^d$ encodes intrinsic properties of signals.
 
-![Autoencoder Architecture](images/archi.png)
+<p align="center">
+  <img src="images/archi.png" alt="Autoencoder Architecture" style="width:85%;">
+</p>
 
 ### Distance Definition in Latent Space
 
@@ -79,8 +81,9 @@ To evaluate the generalization of our approach beyond synthetic signals, we appl
 The model was trained on 4-second ECG segments and learned a latent representation that simultaneously preserved inter-signal distances and enabled accurate reconstruction.
 
 <p align="center">
-  <img src="images/recon.png" alt="ECG signal reconstruction">
+  <img src="images/recon.png" alt="ECG signal reconstruction" style="width:88%;">
 </p>
+
 
 **Reconstruction performance:**  
 The CAE achieves high-fidelity reconstructions, with Mean Squared Errors below 0.0015. Despite the variability and noise in ECG waveforms, the model captures key features such as QRS complexes and denoises irrelevant fluctuations. This makes it well-suited for applications like anomaly detection or compression.
@@ -104,7 +107,9 @@ This confirms that the learned latent space reflects meaningful signal similarit
 
 Analysis using PCA on latent representations showed clearly structured parameter trajectories, confirming that the latent space preserves the intrinsic geometry of signals.
 
-![Latent Parameter Trajectory](images/traj.png)
+<p align="center">
+  <img src="images/traj.png" alt="Latent Parameter Trajectory" style="width:85%;">
+</p>
 
 Key findings:
 
