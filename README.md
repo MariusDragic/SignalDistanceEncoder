@@ -72,13 +72,33 @@ s(t) = \sum_{i=0}^{3} a_i t^i + \sum_{i=1}^{8} b_i \cos(w_i t + \varphi_i)
 
 This controlled setting demonstrated the CAE’s capacity to preserve complex parametric relationships in latent space.
 
-### Real ECG Data Application
+## Real ECG Data Application
 
-The method was further validated using real ECG signals. The CAE successfully encoded the complex temporal dynamics and robustly reconstructed the signals, making it suitable for medical anomaly detection.
+To evaluate the generalization of our approach beyond synthetic signals, we applied the model to real ECG data from the WaveForm Database. These signals are more complex and noisy, with varying frequencies and amplitudes, making them an excellent testbed for the autoencoder's robustness.
 
-![ECG Signal Reconstruction](images/recon.png)
+The model was trained on 4-second ECG segments and learned a latent representation that simultaneously preserved inter-signal distances and enabled accurate reconstruction.
 
-![ECG Distance Measurement](images/distance-ECG.png)
+<p align="center">
+  <img src="images/ecg_reconstruction.png" alt="ECG signal reconstruction">
+</p>
+
+**Reconstruction performance:**  
+The CAE achieves high-fidelity reconstructions, with Mean Squared Errors below 0.0015. Despite the variability and noise in ECG waveforms, the model captures key features such as QRS complexes and denoises irrelevant fluctuations. This makes it well-suited for applications like anomaly detection or compression.
+
+**Distance preservation:**  
+To evaluate whether the latent space meaningfully captures proximity, we computed distances between several pairs of signals and visualized the closest, farthest, and a random pair:
+
+<p align="center">
+  <img src="images/ecg_distance_measurement.png" alt="ECG signal distance comparison">
+</p>
+
+The plots illustrate that:
+- **Closest pair**: morphologically near-identical signals yield low latent-space distances (~0.21).
+- **Farthest pair**: highly dissimilar or noisy signals are mapped far apart (distance > 4).
+- **Random pair**: moderate distance reflects mid-range similarity.
+
+This confirms that the learned latent space reflects meaningful signal similarity as intended.
+
 
 ## Latent Space Insights
 
