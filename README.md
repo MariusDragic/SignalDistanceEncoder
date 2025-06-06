@@ -118,15 +118,7 @@ Key findings:
 - Robustness of distance preservation even under noisy conditions.
 - Effective encoding of nonlinear signal characteristics.
 
-## Getting Started
-
-### Requirements
-
-- Python ≥ 3.10
-- PyTorch
-- NumPy, Pandas, SciPy
-- Matplotlib, seaborn
-- Jupyter Notebook
+## Requirements
 
 Install dependencies:
 ```bash
