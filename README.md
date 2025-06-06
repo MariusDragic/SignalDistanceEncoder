@@ -8,6 +8,7 @@ Measuring distances between signals accurately is critical in many fields such a
 
 This project addresses these issues by developing a convolutional autoencoder (CAE) that learns a latent representation of signals specifically structured to preserve meaningful distances defined in the original parameter space.
 
+A detailed report including theoretical background and extended results is available [here](https://github.com/MariusDragic/SignalDistanceEncoder/blob/main/DistAE-report.pdf) for interested readers.
 
 ## Motivation and Theoretical Background
 
